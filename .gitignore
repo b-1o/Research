@@ -1,0 +1,6 @@
+.python-version
+*.jpg
+*.pyc
+source/mnist.pkl
+source/cifar-10-batches-py/
+source/parameter.pkl
