@@ -17,6 +17,10 @@ html_body ="""
             #svgDiv{width:100%%;height:75%%}
             #rightsideDiv{width:30%%;height:100%%;float:left}
 
+            #classTd{width:10%%;text-align:left}
+            #classNumTd{width:15%%;text-align:left}
+            #classMaxTd{width:50%%;text-align:left}
+
             #layerNumTd{width:5%%;text-align:center}
             #layerSelectTd{width:20%%}
             #layerParamTd{width:75%%}
@@ -29,8 +33,83 @@ html_body ="""
                 <div style="width:50%%;height:100%%;float:left">
                     <h1>Parameter</h1>
                 </div>
-                <div style="width:50%%;height:100%%;float:left">
-                    <h1>Save</h1>
+                <div style="width:50%%;height:100%%;float:left;overflow:auto">
+                    <h1>Classes</h1>
+                    <table>
+                        <tr>
+                            <td id="classTd">Class0
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class0" />
+                            </td>
+                            <td id="classMaxTd">
+                                <div>test</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class1
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class1" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class2
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class3
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class3" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class4
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class4" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class5
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class5" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class6
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class6" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class7
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class7" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class8
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class8" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="classTd">Class9
+                            </td>
+                            <td id="classNumTd">
+                                <input name="class9" />
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div id="svgDiv">
@@ -48,7 +127,7 @@ html_body ="""
             </div>
         </div>
         <div id="rightsideDiv" style="overflow:auto">
-            <h1>Layer</h1>
+            <h1>Layers</h1>
             <form method="POST" action="/cgi-bin/gui.py" name="networkForm" id="networkForm">
                 <table>
                     <tr>
@@ -70,7 +149,7 @@ html_body ="""
                             <td id="layerNumTd">
                             </td>
                             <td id="layerSelectTd">
-                                <select id="selectData" name="data" required>
+                                <select id="selectData" name="data" onchange="changeClassNum();" required>
                                     <option></option>
                                     <option value="Mnist">Mnist</option>
                                     <option value="Cifar">Cifar</option>

@@ -1,10 +1,7 @@
 #coding:utf-8
 import pickle
-import os
 import numpy as np
-import pandas as pd
 import cifar10
-from PIL import Image
 
 """
 class LoadData( object ):
@@ -42,13 +39,69 @@ class LoadData( object ):
 
         return train_data, train_labels, valid_data, valid_labels
 """
-def load( target_data ):
-    #if   target_data == "mnist" : return mnist()
-    #elif target_data == "cifar" : return cifar()
 
-    if   target_data == "Mnist" : return mnist()
+def load( target_data ):
+
+    if   target_data == "Mnist" : return mnist2()
     elif target_data == "Cifar" : return cifar()
-    elif target_data == "Uniqlo" : return uniqlo()
+
+
+
+def mnist2():
+    # mnistデータよみこみ
+    with open('mnist.pkl', 'rb') as file:
+        dataset_mnist = pickle.load(file)
+    data = dataset_mnist['train_img'].reshape((60000, 1,  28, 28))
+    labels = dataset_mnist['train_label']
+
+    # 配列自体をシャッフルすることができないから（データとラベルを同様にシャッフルしなければならないため）
+    # 配列のインデックスをシャッフルする
+    index = np.array([ i for i in range(60000) ])
+    np.random.shuffle(index)
+
+    # カテゴリごとのサンプル数をカウント
+    train_num = np.zeros(10, dtype=int)
+    valid_num = np.zeros(10, dtype=int)
+
+    # データ、ラベルの配列の雛形
+    valid_data = np.zeros(784, dtype=int).reshape((1,28,28))
+    train_data = np.zeros(784, dtype=int).reshape((1,28,28))
+    valid_labels = np.zeros(1, dtype=int)
+    train_labels = np.zeros(1, dtype=int)
+
+    # カテゴリごとのサンプル数
+    sample_num = np.array([4800,200,4800,4800,4800,4800,200,4800,4800,4800])
+
+    for i in range(60000):
+        # 検証データが1000未満であるとき
+        if valid_num[labels[index[i]]] < 1000:
+            valid_data = np.concatenate([valid_data, data[index[i]]], axis=0)
+            valid_labels= np.hstack((valid_labels, labels[index[i]]))
+            valid_num[labels[index[i]]] += 1
+        # 検証データが1000を超えてかつ訓練データが指定数未満であるとき
+        elif train_num[labels[index[i]]] < sample_num[labels[index[i]]]:
+            train_data = np.concatenate([train_data, data[index[i]]], axis=0)
+            train_labels= np.hstack((train_labels, labels[index[i]]))
+            train_num[labels[index[i]]] += 1
+
+    # 配列の雛形の削除およびデータの形成
+    valid_data = np.delete(valid_data,[0,0], 0).reshape((-1, 1,  28, 28))
+    train_data = np.delete(train_data,[0,0], 0).reshape((-1, 1,  28, 28))
+    valid_labels = np.delete(valid_labels, 0)
+    train_labels = np.delete(train_labels, 0)
+    valid_data = np.asarray( valid_data, dtype = np.float32 ) / 255.0
+    train_data = np.asarray( train_data, dtype = np.float32 ) / 255.0
+    valid_labels = np.asarray( valid_labels, dtype = np.int32 )
+    train_labels = np.asarray( train_labels, dtype = np.int32 )
+
+    # カテゴリごとのサンプル数
+    num_train_label = [0] * 10
+    for i in range(10):
+        num_train_label[i] = len(np.where(train_labels==i)[0])
+
+    return train_data, train_labels, valid_data, valid_labels, num_train_label
+
+
 
 def mnist():
     # mnistデータよみこみ
@@ -68,6 +121,7 @@ def mnist():
         num_train_label[i] = len(np.where(train_labels==i)[0])
 
     return train_data, train_labels, valid_data, valid_labels, num_train_label
+    #return train_data, train_labels, num_train_label
 
 
 def cifar():
@@ -86,61 +140,5 @@ def cifar():
     num_train_label = [0] * 10
     for i in range(10):
         num_train_label[i] = len(np.where(train_labels==i)[0])
-
-    return train_data, train_labels, valid_data, valid_labels, num_train_label
-
-
-def uniqlo():
-    train_data = []
-    train_labels = []
-    data = pd.read_csv("train_master.tsv", sep='\t')
-
-    for row in data.iterrows():
-        file, label = row[1]['file_name'], row[1]['category_id']
-        try:
-            im = Image.open(os.path.join("..", "data", "train", file))
-            #print(file)
-
-            # きれいじゃない・・・
-            """
-            if label == 1 or label == 2 or label == 10 or label == 11 or label == 13 or label == 14 or label == 15 or label == 16 or label == 17 or label == 19 or label == 20:
-                for i in range(4):
-                    inflation_image(im, label, file_number, image_size, train_data, train_labels, train_files)
-            """
-            #print(row)
-
-            # 画像の縮小
-            image_size = 50
-            im = im.resize((image_size, image_size))
-
-            train_data.append(np.array(im) / 255.0)
-            train_labels.append(label)
-            #train_files.append(file_number)
-            #file_number += 1
-
-            #if  datetime.datetime.now() > load_time + datetime.timedelta(seconds=10):
-                #print( "{0:.1f}".format(len(train_data) * 100 / len(data)) + "%")
-                #load_time += datetime.timedelta(seconds=10)
-
-
-        except Exception as e:
-            print(str(e))
-
-    # 画像データ、ラベル、ファイル名を配列に格納
-    train_data = np.array(train_data).transpose(0, 3, 1, 2)
-    train_labels = np.array(train_labels)
-    train_data = np.asarray( train_data, dtype = np.float32 )
-    train_labels = np.asarray( train_labels, dtype = np.int32 )
-    valid_data, valid_labels = train_data[10000:], train_labels[10000:]
-    train_data, train_labels = train_data[:10000], train_labels[:10000]
-    #valid_data, valid_labels = train_data[1000:], train_labels[1000:]
-    #train_data, train_labels = train_data[:1000], train_labels[:1000]
-    #train_files = np.array(train_files)
-
-    # カテゴリごとのサンプル数
-    num_train_label = [0] * 24
-    for i in range(24):
-        num_train_label[i] = len(np.where(train_labels==i)[0])
-
 
     return train_data, train_labels, valid_data, valid_labels, num_train_label
