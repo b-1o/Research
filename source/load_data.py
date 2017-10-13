@@ -70,7 +70,7 @@ def mnist2():
     train_labels = np.zeros(1, dtype=int)
 
     # カテゴリごとのサンプル数
-    sample_num = np.array([4800,200,4800,4800,4800,4800,200,4800,4800,4800])
+    sample_num = np.array([4800,50,4800,4800,4800,4800,50,4800,4800,4800])
 
     for i in range(60000):
         # 検証データが1000未満であるとき
