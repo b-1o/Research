@@ -32,7 +32,7 @@ class TheanoFunction( object ):
         #cost = _crossentropy( Z, lab )
 
         # Mnist
-        #cost = _crossentropy( Z, lab ) * T.pow( T.log(4800 / num) + 1, 2 )
+        #cost = _crossentropy( Z, lab ) * T.pow( T.log(4000 / num) + 1, 2 )
         # Cifar
         #cost = _crossentropy( Z, lab ) * T.pow( T.log(4048 / num) + 1, 2 )
         # Uniqlo
@@ -57,7 +57,7 @@ class TheanoFunction( object ):
         #cost = T.mean( _crossentropy( Z, lab ) * T.pow( 1, 2 ) )
 
         # Mnist
-        #cost = T.mean( _crossentropy( Z, lab ) * T.pow( T.log(4800 / num) + 1, 2 ) )
+        #cost = T.mean( _crossentropy( Z, lab ) * T.pow( T.log(4000 / num) + 1, 2 ) )
         # Cifar
         #cost = T.mean( _crossentropy( Z, lab ) * T.pow( T.log(4048 / num) + 1, 2 ) )
         # Uniqlo
