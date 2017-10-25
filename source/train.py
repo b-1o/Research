@@ -13,7 +13,7 @@ import layers as convnet
 import neural_network as network
 import load_data
 
-np.random.seed( 0 )
+np.random.seed( 10000 )
 
 
 def train():

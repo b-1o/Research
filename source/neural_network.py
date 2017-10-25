@@ -33,8 +33,8 @@ def CPRS( network_list ):
     #print(train_data[0].shape)
 
     #Xdim = ( Xnch, Xrow, Xcol )
-    ds1 = ( 2, 2 )
-    #st1 = ( 2, 2 )
+    ds1 = ( 3, 3 )
+    st1 = ( 1, 1 )
 
     input = {}
     weight_dim = {}
@@ -74,17 +74,14 @@ def CPRS( network_list ):
         #elif network_list[i] == "Pool":
         elif network_list[i] == "Pooling":
             input[i] = output[i - 1]
+            output[i] = input[i]
 
-            if input[i][1] % 2 == 0:
-                #input[i][1] = input[i][1] + 1
-                #input[i][2] = input[i][2] + 1
-                #print(input[i][1])
-                #print(input[i][2])
-                output[i] = ( input[i][0], input[i][1] / 2, input[i][2] / 2 )
-            else:
-                output[i] = ( input[i][0], (input[i][1] / 2)+1, (input[i][2] / 2)+1 )
+            #if input[i][1] % 2 == 0:
+                #output[i] = ( input[i][0], input[i][1] / 2, input[i][2] / 2 )
+            #else:
+                #output[i] = ( input[i][0], (input[i][1] / 2)+1, (input[i][2] / 2)+1 )
 
-            layers.append( convnet.PoolLayer( input[i], output[i], ds1, bias=True ) )
+            layers.append( convnet.PoolLayer( input[i], output[i], ds1, st=st1, bias=True ) )
 
         elif network_list[i] == "Relu":
             input[i] = output[i - 1]

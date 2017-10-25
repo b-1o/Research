@@ -70,12 +70,13 @@ class PoolLayer( Layer ):
         # parameters of the pooling layer
         self.ds = ds
         self.st = st
-        self.ignore_border = False
+        self.ignore_border = True
+        self.pad = (1, 1)
 
 
 
     def output( self, X, train_flag ):
-        Z = pool_2d(input = X, ws = self.ds, ignore_border = self.ignore_border, stride = self.st, mode = 'max')
+        Z = pool_2d(input = X, ws = self.ds, ignore_border = self.ignore_border, stride = (1,1), pad = (1,1), mode = 'max')
         if self.bias : Z += self.b.dimshuffle( 'x', 0, 'x', 'x' ) # 1 x nch x 1 x 1
 
         return Z
