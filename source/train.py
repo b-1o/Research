@@ -13,7 +13,8 @@ import layers as convnet
 import neural_network as network
 import load_data
 
-np.random.seed( 10000 )
+np.random.seed( 1740 )
+#print np.random.rand()
 
 
 def train():
@@ -26,24 +27,15 @@ def train():
     train_data, train_labels, valid_data, valid_labels, num_train_label = load_data.load( params_dict['InputData'] )
     cnn = network.CPRS( params_dict['NetworkList'] )
 
-    #for i in range(10):
-        #print("Category(train)" + str(i) + ":" + str(num_train_label[i]))
-    #print("\nnum_train_total:" + str(sum(num_train_label)))
 
-    #print(num_train_label[train_labels[0]])
-    #print(num_train_label[train_labels[1]])
-    #print(num_train_label[train_labels[2]])
-    #print(type(num_train_label))
-
-
-    ##### training
-    #
-    nepoch = 100000
+    ######## training #########
+    nepoch = 200000
     batchsize = 100
     eta, mu, lam = 0.01, 0.9, 0.0001
 
 
     for i in range(nepoch):
+        #np.random.seed(8641)
 
         cnt = 0
         valid_cnt = 0
@@ -103,7 +95,9 @@ def train():
             print("         Valid : " + str( float(valid_cnt) *100 / len(valid_data) ) )
             sys.stdout.write("\n")
 
-        choice = np.random.choice(len(train_data), batchsize)
+        choice = np.random.choice(len(train_data), batchsize, replace=False)
+        print np.random.rand()
+        #print choice
         XL_batch = train_data[choice]
         labelL_batch = train_labels[choice]
 

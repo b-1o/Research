@@ -2,6 +2,7 @@
 import pickle
 import numpy as np
 import cifar10
+from tqdm import tqdm
 
 """
 class LoadData( object ):
@@ -42,7 +43,7 @@ class LoadData( object ):
 
 def load( target_data ):
 
-    if   target_data == "Mnist" : return mnist()
+    if   target_data == "Mnist" : return mnist2()
     elif target_data == "Cifar" : return cifar2()
 
 
@@ -70,9 +71,9 @@ def mnist2():
     train_labels = np.zeros(1, dtype=int)
 
     # カテゴリごとのサンプル数
-    sample_num = np.array([4000,4000,20,4000,4000,4000,4000,4000,4000,4000])
+    sample_num = np.array([10,5000,5000,5000,5000,5000,5000,5000,5000,5000])
 
-    for i in range(60000):
+    for i in tqdm(range(60000)):
         # 検証データが1000未満であるとき
         if valid_num[labels[index[i]]] < 1000:
             valid_data = np.concatenate([valid_data, data[index[i]]], axis=0)
