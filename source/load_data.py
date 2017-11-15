@@ -45,7 +45,7 @@ def load( target_data, sample_num ):
 
     #if   target_data == "Mnist" : return mnist()
     if   target_data == "Mnist" : return mnist3(sample_num)
-    elif target_data == "Cifar" : return cifar2()
+    elif target_data == "Cifar" : return cifar()
 
 
 def mnist3(sample_num):
@@ -117,6 +117,7 @@ def mnist3(sample_num):
     train_data = np.append(train_data, data_class8, axis=0)
     train_data = np.append(train_data, data_class9, axis=0)
     train_data = train_data.reshape((-1, 1,  28, 28))
+    train_data = np.asarray( train_data, dtype = np.float32 )
 
     train_data_labels = data_class0_labels
     train_data_labels = np.append(train_data_labels, data_class1_labels)

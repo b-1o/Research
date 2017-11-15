@@ -95,9 +95,10 @@ def train(sample_num):
     all_df   = pd.DataFrame()
 
     # 100回繰り返す
-    loop = 10
-    result_train_all = np.empty((0, 12), float)
-    result_valid_all = np.empty((0, 12), float)
+    # 30回でおｋ
+    loop = 1
+    result_train_all = np.empty((0, 12), np.float32)
+    result_valid_all = np.empty((0, 12), np.float32)
     print("Start Training...")
     for i in range(loop):
         # SEED値を設定し、乱数更新
@@ -109,12 +110,12 @@ def train(sample_num):
         cnn = network.CPRS( params_dict['NetworkList'] )
 
         ######## training #########
-        nepoch = 10000
+        nepoch = 100000
         batchsize = 100
         eta, mu, lam = 0.01, 0.9, 0.0001
 
-        result_train = np.empty((0, 12), float)
-        result_valid = np.empty((0, 12), float)
+        result_train = np.empty((0, 12), np.float32)
+        result_valid = np.empty((0, 12), np.float32)
 
         for j in range(nepoch):
 
@@ -280,7 +281,9 @@ def train(sample_num):
 
     # 結果の配列をデータフレームに変換、CSVファイル出力
     #df = pd.DataFrame(result)
-    df.to_csv("result/result" + str(np.random.randint(1000000)) + ".csv")
+    filename = np.random.randint(1000000)
+    print(filename)
+    df.to_csv("result/result" + str(filename) + ".csv")
 
 
 

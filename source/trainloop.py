@@ -13,10 +13,9 @@ def pattern2():
     # カテゴリごとのサンプル数
     sample_num = np.array([5000,5000,5000,5000,5000,5000,5000,5000,5000,5000])
 
-    for i in range(10):
+    train100.train(sample_num)
 
-        sample_num[i] = 5000
-        train100.train(sample_num)
+    for i in range(10):
 
         sample_num[i] = 20
         train100.train(sample_num)
