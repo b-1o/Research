@@ -95,7 +95,7 @@ def train(sample_num):
     all_df   = pd.DataFrame()
 
     # 100回繰り返す
-    loop = 1
+    loop = 10
     result_train_all = np.empty((0, 12), float)
     result_valid_all = np.empty((0, 12), float)
     print("Start Training...")
@@ -109,7 +109,7 @@ def train(sample_num):
         cnn = network.CPRS( params_dict['NetworkList'] )
 
         ######## training #########
-        nepoch = 1000
+        nepoch = 10000
         batchsize = 100
         eta, mu, lam = 0.01, 0.9, 0.0001
 
