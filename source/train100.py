@@ -96,7 +96,7 @@ def train(sample_num):
 
     # 100回繰り返す
     # 30回でおｋ
-    loop = 1
+    loop = 30
     result_train_all = np.empty((0, 12), np.float32)
     result_valid_all = np.empty((0, 12), np.float32)
     print("Start Training...")
@@ -110,7 +110,7 @@ def train(sample_num):
         cnn = network.CPRS( params_dict['NetworkList'] )
 
         ######## training #########
-        nepoch = 100000
+        nepoch = 20000
         batchsize = 100
         eta, mu, lam = 0.01, 0.9, 0.0001
 

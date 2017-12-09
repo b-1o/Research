@@ -1,6 +1,7 @@
 .python-version
 *.jpg
 *.pyc
+*.csv
 source/mnist_reshape.pkl
 source/mnist.pkl
 source/cifar-10-batches-py/

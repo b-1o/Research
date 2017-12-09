@@ -32,11 +32,11 @@ class TheanoFunction( object ):
         #cost = _crossentropy( Z, lab )
 
         # Mnist
-        #cost = _crossentropy( Z, lab ) * T.pow( T.log(4000 / num) + 1, 2 )
+        cost = _crossentropy( Z, lab ) * T.pow( T.log(4000 / num) + 1, 3 )
         # Cifar
         #cost = _crossentropy( Z, lab ) * T.pow( T.log(4048 / num) + 1, 2 )
         # Uniqlo
-        cost = return_cost( Z, lab, num )
+        #cost = return_cost( Z, lab, num )
 
         #return theano.function( [ Z, lab ], cost )
         return theano.function( [ Z, lab, num ], cost )
@@ -57,12 +57,13 @@ class TheanoFunction( object ):
         #cost = T.mean( _crossentropy( Z, lab ) * T.pow( 1, 2 ) )
 
         # Mnist
-        #cost = T.mean( _crossentropy( Z, lab ) * T.pow( T.log(4000 / num) + 1, 2 ) )
+        cost = T.mean( _crossentropy( Z, lab ) * T.pow( T.log(4000 / num) + 1, 3 ) )
         # Cifar
         #cost = T.mean( _crossentropy( Z, lab ) * T.pow( T.log(4048 / num) + 1, 2 ) )
         # Uniqlo
 
-        cost = T.mean( return_cost( Z, lab, num ) )
+
+        #cost = T.mean( return_cost( Z, lab, num ) )
 
         updatesList = []
         for il, layer in enumerate( self.Layers ):
